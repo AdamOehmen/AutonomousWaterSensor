@@ -49,6 +49,9 @@ const int TX_PIN = 1; // Bluetooth TX digital PWM-supporting pin
 const int BLUETOOTH_BAUD_RATE = 38400;
 SoftwareSerial bluetooth(RX_PIN, TX_PIN);
 
+//Motor setup
+#define motor1Pin 9
+#define motor1Pin 10
 void setup(void)
 {
   // Start serial communication for debugging purposes
@@ -77,6 +80,10 @@ void setup(void)
   //Ultrasonic 2 setup
   pinMode(TRIGGER2_PIN, OUTPUT);
   pinMode(ECHO2_PIN, INPUT);
+
+  //Motor setup
+  pinMode(motor1Pin, OUTPUT);
+  pinMode(motor2Pin, OUTPUT);
 }
 
 void loop(void){ 
@@ -153,15 +160,13 @@ void loop(void){
   duration2 = duration2 / 20;
   if(duration1 > aNum || duration2 > aNum)
   {
-    Timer1.initialize(10000);
-    Timer1.pwm(9, 75 ); 
-    Timer1.pwm(10, 0 );
+    digitalWrite(motor1Pin, HIGH);
+    digitalWrite(motor2Pin, LOW);
   }
   else
   {
-    Timer1.initialize(10000);
-    Timer1.pwm(9, 0 ); 
-    Timer1.pwm(10, 75 );
+    digitalWrite(motor1Pin, LOW);
+    digitalWrite(motor2Pin, HIGH);
   }
   
 }
